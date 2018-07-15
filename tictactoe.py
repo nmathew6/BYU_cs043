@@ -1,8 +1,9 @@
-class TicTacToe():
+class TicTacToe:
 
-    def __init__(self, letter):
+    def __init__(self, p1_letter, p2_letter):
         self.board = [' '] * 10
-        self.letter = letter
+        self.p1_le = p1_letter
+        self.p2_le = p2_letter
 
     def drawBoard(self):
         # This function prints out the board that it was passed.
@@ -20,48 +21,44 @@ class TicTacToe():
         print(' ' + self.board[1] + ' | ' + self.board[2] + ' | ' + self.board[3])
         print('   |   |')
 
-    def playAgain(self):
-        # This function returns True if the player wants to play again, otherwise it returns False.
-        print('Do you want to play again? (yes or no)')
-        return input().lower().startswith('y')
+    def makeMove(self, letter, move):
+        self.board[move] = letter
 
-    def isWinner(self, bo, le):
+    def isWinner(self, letter):
         # Given a board and a player's letter, this function returns True if that player has won.
         # We use bo instead of board and le instead of letter so we don't have to type as much.
-        self.board = bo
-        self.letter = le
-        return ((self.board[7] == self.letter and self.board[8] == self.letter and self.board[9] == self.letter) or  # across the top
-                (self.board[4] == self.letter and self.board[5] == self.letter and self.board[6] == self.letter) or  # across the middle
-                (self.board[1] == self.letter and self.board[2] == self.letter and self.board[3] == self.letter) or  # across the bottom
-                (self.board[7] == self.letter and self.board[4] == self.letter and self.board[1] == self.letter) or  # down the left side
-                (self.board[8] == self.letter and self.board[5] == self.letter and self.board[2] == self.letter) or  # down the middle
-                (self.board[9] == self.letter and self.board[6] == self.letter and self.board[3] == self.letter) or  # down the right side
-                (self.board[7] == self.letter and self.board[5] == self.letter and self.board[3] == self.letter) or  # diagonal
-                (self.board[9] == self.letter and self.board[5] == self.letter and self.board[1] == self.letter))  # diagonal
+        return ((self.board[7] == letter and self.board[8] == letter and self.board[9] == letter) or  # across the top
+                (self.board[4] == letter and self.board[5] == letter and self.board[6] == letter) or  # across the middle
+                (self.board[1] == letter and self.board[2] == letter and self.board[3] == letter) or  # across the bottom
+                (self.board[7] == letter and self.board[4] == letter and self.board[1] == letter) or  # down the left side
+                (self.board[8] == letter and self.board[5] == letter and self.board[2] == letter) or  # down the middle
+                (self.board[9] == letter and self.board[6] == letter and self.board[3] == letter) or  # down the right side
+                (self.board[7] == letter and self.board[5] == letter and self.board[3] == letter) or  # diagonal
+                (self.board[9] == letter and self.board[5] == letter and self.board[1] == letter))  # diagonal
 
-    def getPlayerMove(self, board):
+    def isSpaceFree(self, move):
+        # Return true if the passed move is free on the passed board.
+        return self.board[move] == ' '
+
+    def getPlayerMove(self):
         # Let the player type in his move.
-        self.board = board
         move = ' '
-        while move not in '1 2 3 4 5 6 7 8 9'.split() or not isSpaceFree(self.board, int(move)):
+        while move not in '1 2 3 4 5 6 7 8 9'.split() or not self.isSpaceFree(int(move)):
             print('What is your next move? (1-9)')
             move = input()
         return int(move)
 
-    def makeMove(self, move):
-        self.move = move
-        self.board[self.move] = self.letter
-
     def isBoardFull(self):
         # Return True if every space on the board has been taken. Otherwise return False.
         for i in range(1, 10):
-            if isSpaceFree(self.board, i):
+            if self.isSpaceFree(i):
                 return False
         return True
 
-    def isSpaceFree(self, board, move):
-        # Return true if the passed move is free on the passed board.
-        self.board = board
-        self.move = move
-        return self.board[self.move] == ' '
+    def playAgain():
+        # This function returns True if the player wants to play again, otherwise it returns False.
+        print('Do you want to play again? (yes or no)')
+        return input().lower().startswith('y')
+
+
 
