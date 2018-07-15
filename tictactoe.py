@@ -1,9 +1,9 @@
+import random
+
 class TicTacToe:
 
-    def __init__(self, p1_letter, p2_letter):
+    def __init__(self):
         self.board = [' '] * 10
-        self.p1_le = p1_letter
-        self.p2_le = p2_letter
 
     def drawBoard(self):
         # This function prints out the board that it was passed.
@@ -55,10 +55,65 @@ class TicTacToe:
                 return False
         return True
 
-    def playAgain():
+    def playAgain(self):
         # This function returns True if the player wants to play again, otherwise it returns False.
         print('Do you want to play again? (yes or no)')
         return input().lower().startswith('y')
 
+    def whoGoesFirst(self):
+        # Randomly choose the player who goes first.
+        if random.randint(0, 1) == 0:
+            return 1
+        else:
+            return 2
 
 
+print('Welcome to Tic Tac Toe!')
+
+while True:
+    # Makes game object
+    game = TicTacToe()
+    turn = game.whoGoesFirst()
+    print('Player ' + str(turn) + ' will go first.')
+    gameIsPlaying = True
+    #player one is O, player 2 is X
+
+    while gameIsPlaying:
+        if turn == 1:
+            # Player 1 turn.
+            game.drawBoard()
+            move = game.getPlayerMove()
+            game.makeMove('O', move)
+
+            if game.isWinner('O'):
+                game.drawBoard()
+                print('Player 1 has won the game.')
+                gameIsPlaying = False
+            else:
+                if game.isBoardFull():
+                    game.drawBoard()
+                    print('The game is a tie!')
+                    break
+                else:
+                    turn = 2
+
+        else:
+            # Player 2 turn.
+            game.drawBoard()
+            move = game.getPlayerMove()
+            game.makeMove('X', move)
+
+            if game.isWinner('X'):
+                game.drawBoard()
+                print('Player 2 has won the game.')
+                gameIsPlaying = False
+            else:
+                if game.isBoardFull():
+                    game.drawBoard()
+                    print('The game is a tie!')
+                    break
+                else:
+                    turn = 1
+
+    if not game.playAgain():
+        break
