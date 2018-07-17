@@ -67,25 +67,39 @@ class TicTacToe:
         else:
             return 2
 
+    def inputPlayerLetter(self):
+        # Lets the player type which letter they want to be.
+        # Returns a list with the player's letter as the first item, and the computer's letter as the second.
+        letter = ''
+        while not (letter == 'X' or letter == 'O'):
+            print('Do you want to be X or O?')
+            letter = input().upper()
+            return letter
+
 
 print('Welcome to Tic Tac Toe!')
 
 while True:
     # Makes game object
     game = TicTacToe()
+    p1_le = game.inputPlayerLetter()
+    if p1_le == 'X':
+        p2_le = 'O'
+    else:
+        p2_le = 'X'
     turn = game.whoGoesFirst()
     print('Player ' + str(turn) + ' will go first.')
     gameIsPlaying = True
-    #player one is O, player 2 is X
+    
 
     while gameIsPlaying:
         if turn == 1:
             # Player 1 turn.
             game.drawBoard()
             move = game.getPlayerMove()
-            game.makeMove('O', move)
+            game.makeMove(p1_le, move)
 
-            if game.isWinner('O'):
+            if game.isWinner(p1_le):
                 game.drawBoard()
                 print('Player 1 has won the game.')
                 gameIsPlaying = False
@@ -101,9 +115,9 @@ while True:
             # Player 2 turn.
             game.drawBoard()
             move = game.getPlayerMove()
-            game.makeMove('X', move)
+            game.makeMove(p2_le, move)
 
-            if game.isWinner('X'):
+            if game.isWinner(p2_le):
                 game.drawBoard()
                 print('Player 2 has won the game.')
                 gameIsPlaying = False
