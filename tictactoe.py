@@ -26,7 +26,6 @@ class TicTacToe:
 
     def isWinner(self, letter):
         # Given a board and a player's letter, this function returns True if that player has won.
-        # We use bo instead of board and le instead of letter so we don't have to type as much.
         return ((self.board[7] == letter and self.board[8] == letter and self.board[9] == letter) or  # across the top
                 (self.board[4] == letter and self.board[5] == letter and self.board[6] == letter) or  # across the middle
                 (self.board[1] == letter and self.board[2] == letter and self.board[3] == letter) or  # across the bottom
